@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+Vestido
+</title>
+
+<style>
+
+body{
+    background:#f5f2ee;
+    font-family:Georgia,serif;
+    max-width:1400px;
+    margin:auto;
+    padding:40px;
+}
+
+.contenedor{
+    max-width:1400px;
+    margin:auto;
+}
+
+.ficha{
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    gap:20px;
+    max-width:900px;
+    margin:auto;
+}
+
+.imagen{
+    width:550px;
+    flex:none;
+}
+
+
+.datos{
+
+    width:300px;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    margin-top:100px;
+    height:fit-content;
+
+}
+
+.datos h3{
+    font-size:12px;
+    letter-spacing:2px;
+    color:#9a8d7a;
+    margin-top:18px;
+    margin-bottom:6px;
+}
+#firma{
+
+    color:#5f5750;
+
+    font-size:42px;
+
+    margin-bottom:30px;
+
+    font-weight:normal;
+    letter-spacing:1px;
+
+}
+
+.info{
+
+    margin-top:20px;
+
+    font-size:18px;
+
+    line-height:2;
+
+    color:#444;
+
+}
+
+
+#fotoPrincipal{
+    width:100%;
+    max-width:450px;
+    border-radius:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,.10);
+}
+
+.miniaturas{
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.miniaturas img{
+    width:120px;
+    height:160px;
+    object-fit:cover;
+    border-radius:10px;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition:.3s;
+}
+
+.miniaturas img:hover{
+    border-color:#c9b59b;
+    transform:translateY(-4px);
+}
+
+.datos h3{
+
+    font-size:11px;
+
+    letter-spacing:3px;
+
+    color:#b8ab97;
+
+    margin-top:18px;
+
+    margin-bottom:8px;
+
+}
+
+.volver{
+    display:inline-block;
+    margin-bottom:25px;
+    color:#8b7d6b;
+    text-decoration:none;
+    font-size:14px;
+    letter-spacing:1px;
+}
+
+.volver:hover{
+    color:#5f5750;
+}
+
+.grid-info{
+    display:grid;
+    grid-template-columns:140px 140px;
+    gap:20px;
+}
+
+.descripcion{
+    margin-top:25px;
+    padding:15px;
+    background:#f8f3ec;
+    border-radius:10px;
+    line-height:1.6;
+}
+</style>
+
+</head>
+
+<body>
+<a href="invitada.html" class="volver">
+← Volver a la colección
+</a>
+
+
+<div class="ficha">
+
+<div class="imagen">
+
+<h1 id="firma">
+Cargando...
+</h1>
+
+<img id="fotoPrincipal">
+
+<div id="miniaturas" class="miniaturas"></div>
+<div id="descripcionVestido" class="descripcion"></div>
+
+</div>
+
+<div class="datos">
+
+<div class="info" id="datos">
+</div>
+
+</div>
+
+</div>
+<script>
+
+const parametros =
+new URLSearchParams(window.location.search);
+
+const id =
+parametros.get("id");
+
+fetch("listado_de_vestidos_completo.csv")
+.then(r=>r.text())
+.then(texto=>{
+
+const lineas = texto.split("\n");
+
+for(let i=1;i<lineas.length;i++){
+
+const c = lineas[i].split(";");
+if(c[2] != "INVITADA") continue;
+
+if(c[0] == id){
+
+document.getElementById("firma")
+.innerText = c[9];
+
+document.getElementById("datos").innerHTML =
+
+'<div class="grid-info">' +
+
+'<div>' +
+
+'<h3>CÓDIGO</h3>' + c[0] +
+
+'<h3>DISEÑADOR</h3>' + c[9] +
+
+'<h3>MODELO</h3>' + c[6] +
+
+'<h3>MATERIAL</h3>' + c[7] +
+
+'</div>' +
+
+'<div>' +
+
+'<h3>TALLA</h3>' + c[3] +
+
+'<h3>COLOR</h3>' + c[8] +
+
+'<h3>ESTADO</h3>' + c[4] +
+
+'</div>' +
+
+'</div>' +
+
+'<div class="descripcion">' +
+
+'<h3>DESCRIPCIÓN</h3>' + c[13] +
+
+'</div>';
+
+
+
+
+let codigo =
+c[0].padStart(2,"0");
+
+let foto =
+document.getElementById("fotoPrincipal");
+console.log(codigo);
+console.log("Fotos/" + codigo + "_1.png");
+
+foto.src =
+"Fotos/" + codigo + "_1.png";
+let miniaturas =
+document.getElementById("miniaturas");
+
+foto.onerror = function(){
+
+foto.onerror = function(){
+
+foto.onerror = function(){
+
+foto.src =
+"Fotos/" + codigo + "_1.webp";
+
+};
+
+foto.src =
+"Fotos/" + codigo + "_1.jpeg";
+
+};
+
+foto.src =
+"Fotos/" + codigo + "_1.jpg";
+
+};
+
+for(let n=1;n<=5;n++){
+
+let mini =
+document.createElement("img");
+
+mini.src =
+"Fotos/" + codigo + "_" + n + ".png";
+
+mini.onerror = function(){
+
+    mini.onerror = function(){
+
+        mini.onerror = function(){
+
+            mini.src =
+            "Fotos/" + codigo + "_" + n + ".webp";
+
+        };
+
+        mini.src =
+        "Fotos/" + codigo + "_" + n + ".jpeg";
+
+    };
+
+    mini.src =
+    "Fotos/" + codigo + "_" + n + ".jpg";
+
+};
+
+mini.onclick = function(){
+
+    foto.src = mini.src;
+
+};
+
+miniaturas.appendChild(mini);
+
+}
+
+}
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

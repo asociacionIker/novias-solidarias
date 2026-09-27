@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+           Catalogo Novias 
+        </title>    
+        <style>
+            body{
+                background:#f5f2ee;
+                font-family:Georgia,serif;
+                margin:0;
+                padding:30px;
+            }
+
+            h1{
+                text-align:center;
+                font-size:48px;
+                color:#c4c2c0;
+                margin-bottom:40px;
+            }   
+            #productos{
+                display:grid;
+                grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+                gap:20px;
+            }
+
+            .card{
+                background:white;
+                border-radius:16px;
+                overflow:hidden;
+                box-shadow:0 8px 25px rgba(0,0,0,.08);
+                transition:all .3s ease;
+            }
+
+            .card:hover{
+                transform:translateY(-5px);
+            }
+
+            .card img{
+                width:100%;
+                height:350px;
+                object-fit:cover;
+            }
+
+            .card h3{
+                text-align:center;
+                color:#5f5750;
+            }
+
+            .card p{
+                padding-left:15px;
+                padding-right:15px;
+            }
+            .volver{
+                display:inline-block;
+                margin-bottom:30px;
+                color:#8b7d6b;
+                text-decoration:none;
+                font-size:14px;
+                letter-spacing:1px;
+            }
+
+            .volver:hover{
+                color:#5f5750;
+            }
+            .btn-secundario{
+                display:inline-block;
+                margin-left:20px;
+                padding:10px 20px;
+                background:#d8c8b4;
+                color:#5f5750;
+                text-decoration:none;
+                border-radius:20px;
+            }
+
+            .btn-secundario:hover{
+                background:#cbb79d;
+            }
+            .filtros{
+                text-align:center;
+                margin-bottom:30px;
+            }
+
+            .filtros button{
+                background:#d8c8b4;
+                color:#5f5750;
+                border:none;
+                border-radius:20px;
+                padding:10px 20px;
+                margin:0 10px;
+                cursor:pointer;
+                font-family:Georgia,serif;
+            }
+
+            .filtros button:hover{
+                background:#cbb79d;
+            }
+
+        </style>     
+            
+      
+    </head>
+    <body>
+        <a href="index.html" class="volver">
+        ← Volver al inicio
+        </a>
+        <a href="complementos.html" class="btn-secundario">
+        Complementos
+        </a>
+        <a href="arras.html" class="btn-secundario">
+        Arras
+        </a>
+        <h1>
+            Catalogo Novias
+        </h1>
+        <div class="filtros">
+
+        <button id="btnTodos">
+        Todos
+        </button>
+
+        <button id="btnCola">
+        Cola desmontable
+        </button>
+
+        </div>
+        <div id="productos">
+        </div>
+        <script>
+            let mostrarSoloCola =
+            localStorage.getItem("cola") == "SI";
+            document.getElementById("btnCola").onclick = function(){
+
+                localStorage.setItem("cola","SI");
+                location.reload();
+
+            };
+
+            document.getElementById("btnTodos").onclick = function(){
+
+                localStorage.removeItem("cola");
+                location.reload();
+
+            };
+            fetch("listado_de_vestidos_completo.csv")           
+            .then(r => r.text())
+            .then(texto => {
+
+            const lineas = texto.split("\n");
+
+            const contenedor =
+            document.getElementById("productos");
+
+            for(let i=1;i<lineas.length;i++){
+
+            const c = lineas[i].split(";");
+            if(c[2] != "NOVIA") continue;
+            if(
+                mostrarSoloCola &&
+                c[12] != "SI"
+            ){
+                continue;
+            }
+            if(c.length < 10) continue;
+
+            const bloque = document.createElement("div");
+            bloque.style.cursor = "pointer";
+            bloque.className = "card";
+            let codigo = c[0].padStart(2,"0");
+            bloque.dataset.codigo = c[0];
+            bloque.dataset.firma = c[9];
+            bloque.dataset.talla = c[3];
+            bloque.dataset.color = c[8];
+            bloque.dataset.estado = c[4];
+            bloque.dataset.material = c[7];
+            bloque.dataset.modelo = c[6];
+            bloque.dataset.comentario = c[11];
+
+          bloque.innerHTML =
+
+            '<img src="Fotos/' + codigo + '_1.png">' +
+
+            '<h3>' + c[9] + '</h3>' +
+
+            '<p><b>Codigo:</b> ' + c[0] + '</p>' +
+
+            '<p><b>Talla:</b> ' + c[3] + '</p>' +
+
+            '<p><b>Color:</b> ' + c[8] + '</p>';
+            contenedor.appendChild(bloque);
+            bloque.onclick = function(){
+
+            window.location.href =
+            "vestido.html?id=" + c[0];
+
+            };
+            let img = bloque.querySelector("img");
+
+            img.onerror = function(){
+
+                img.onerror = function(){
+
+                    img.onerror = function(){
+
+                        img.src = "Fotos/" + codigo + "_1.webp";
+
+                    };
+
+                    img.src = "Fotos/" + codigo + "_1.jpeg";
+
+                };
+
+                img.src = "Fotos/" + codigo + "_1.jpg";
+
+            };
+
+            }
+
+            });
+        </script>
+       
+    </body>
+</html>
