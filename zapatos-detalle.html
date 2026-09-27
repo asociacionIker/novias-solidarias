@@ -233,10 +233,10 @@ c[0].padStart(2,"0");
 let foto =
 document.getElementById("fotoPrincipal");
 console.log(codigo);
-console.log("Fotos/" + codigo + "_1.png");
+console.log("FOTOS/" + codigo + "_1.png");
 
 foto.src =
-"Fotos/" + codigo + "_1.png";
+"FOTOS/" + codigo + "_1.png";
 let miniaturas =
 document.getElementById("miniaturas");
 
@@ -247,17 +247,17 @@ foto.onerror = function(){
 foto.onerror = function(){
 
 foto.src =
-"Fotos/" + codigo + "_1.webp";
+"FOTOS/" + codigo + "_1.webp";
 
 };
 
 foto.src =
-"Fotos/" + codigo + "_1.jpeg";
+"FOTOS/" + codigo + "_1.jpeg";
 
 };
 
 foto.src =
-"Fotos/" + codigo + "_1.jpg";
+"FOTOS/" + codigo + "_1.jpg";
 
 };
 
@@ -267,7 +267,7 @@ let mini =
 document.createElement("img");
 
 mini.src =
-"Fotos/" + codigo + "_" + n + ".png";
+"FOTOS/" + codigo + "_" + n + ".png";
 
 mini.onerror = function(){
 
@@ -276,17 +276,17 @@ mini.onerror = function(){
         mini.onerror = function(){
 
             mini.src =
-            "Fotos/" + codigo + "_" + n + ".webp";
+            "FOTOS/" + codigo + "_" + n + ".webp";
 
         };
 
         mini.src =
-        "Fotos/" + codigo + "_" + n + ".jpeg";
+        "FOTOS/" + codigo + "_" + n + ".jpeg";
 
     };
 
     mini.src =
-    "Fotos/" + codigo + "_" + n + ".jpg";
+    "FOTOS/" + codigo + "_" + n + ".jpg";
 
 };
 
